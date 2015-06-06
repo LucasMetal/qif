@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Text;
 using QifApi.Transactions;
 using System.IO;
 using QifApi.Logic;
@@ -156,10 +157,11 @@ namespace QifApi
         /// Exports the current instance properties to the specified file.
         /// </summary>
         /// <param name="fileName">Name of the file.</param>
+        /// <param name="encoding">Encoding to use when writing the file, defaults to <seealso cref="T:Encoding.UTF8"/></param>
         /// <remarks>This will overwrite an existing file.</remarks>
-        public void Export(string fileName)
+        public void Export(string fileName, Encoding encoding = null)
         {
-            ExportFile(this, fileName);
+            ExportFile(this, fileName, encoding);
         }
 
         /// <summary>
@@ -167,15 +169,16 @@ namespace QifApi
         /// </summary>
         /// <param name="qif">The <seealso cref="T:QifDom"/> to export.</param>
         /// <param name="fileName">Name of the file.</param>
+        /// <param name="encoding">Encoding to use when writing the file, defaults to <seealso cref="T:Encoding.UTF8"/></param>
         /// <remarks>This will overwrite an existing file.</remarks>
-        public static void ExportFile(QifDom qif, string fileName)
+        public static void ExportFile(QifDom qif, string fileName, Encoding encoding = null)
         {
             if (File.Exists(fileName))
             {
                 File.SetAttributes(fileName, FileAttributes.Normal);
             }
 
-            using (StreamWriter writer = new StreamWriter(fileName))
+            using (StreamWriter writer = new StreamWriter(fileName, false, encoding ?? Encoding.UTF8))
             {
                 writer.AutoFlush = true;
 

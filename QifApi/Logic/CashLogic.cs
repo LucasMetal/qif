@@ -130,14 +130,14 @@ namespace QifApi.Logic
 
                 foreach (BasicTransaction item in list)
                 {
-                    writer.WriteLine(NonInvestmentAccountFields.Date + item.Date.ToShortDateString());
+                    writer.WriteLine(NonInvestmentAccountFields.Date + item.Date.ToString(@"M\/dd\'yy")); //Example: D6/29'11
 
                     foreach (int i in item.Address.Keys)
                     {
                         writer.WriteLine(NonInvestmentAccountFields.Address + item.Address[i]);
                     }
 
-                    writer.WriteLine(NonInvestmentAccountFields.Amount + item.Amount.ToString(CultureInfo.CurrentCulture));
+                    writer.WriteLine(NonInvestmentAccountFields.Amount + item.Amount.ToString(CultureInfo.InvariantCulture));
 
                     if (!string.IsNullOrEmpty(item.Category))
                     {
